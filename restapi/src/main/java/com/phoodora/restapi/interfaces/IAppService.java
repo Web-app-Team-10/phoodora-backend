@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.phoodora.restapi.models.Restaurant;
 
-public interface IRestaurantService {
+public interface IService {
     List<Restaurant> findAllRestaurants();
     Restaurant findById(int id);
     Restaurant insert(Restaurant p);
