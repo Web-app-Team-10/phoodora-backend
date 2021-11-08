@@ -1,7 +1,7 @@
 package com.phoodora.restapi.controllers;
 
 import com.phoodora.restapi.models.Restaurant;
-import com.phoodora.restapi.services.RestaurantService;
+import com.phoodora.restapi.services.AppService;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,34 +19,34 @@ import java.util.List;
 public class Controller {
 
     @Autowired
-    RestaurantService restaurantService;
+    AppService service;
     
     @GetMapping("/restaurant")
     public List<Restaurant> getAllrestaurant() {
-        return restaurantService.findAllRestaurants();
+        return service.findAllRestaurants();
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/restaurant/{id}")
     public Restaurant getRestaurant(@PathVariable int id) {
-        return restaurantService.findById(id);
+        return service.findById(id);
     }
 
     @PostMapping("/restaurant")
     public String addRestaurant(@RequestBody Restaurant Restaurant) {
 
         if(Restaurant != null) {
-            restaurantService.insert(Restaurant);
+            service.insert(Restaurant);
             return "Added a Restaurant";
         } else {
             return "Request does not contain a body";
         }
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("restaurant/{id}")
     public String deleteRestaurant(@PathVariable("id") int id) {
 
         if(id > 0) {
-            if(restaurantService.delete(id)) {
+            if(service.delete(id)) {
                 return "Deleted the Restaurant.";
             } else {
                 return "Cannot delete the Restaurant.";
@@ -55,10 +55,10 @@ public class Controller {
         return "The id is invalid for the Restaurant.";
     }
 
-    @PutMapping("")
+    @PutMapping("/restaurant")
     public String updateRestaurant(@RequestBody Restaurant Restaurant) {
         if(Restaurant != null) {
-            restaurantService.update(Restaurant);
+            service.update(Restaurant);
             return "Updated Restaurant.";
         } else {
             return "Request does not contain a body";

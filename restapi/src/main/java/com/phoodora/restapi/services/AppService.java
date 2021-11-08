@@ -3,7 +3,7 @@ package com.phoodora.restapi.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.phoodora.restapi.interfaces.IRestaurantService;
+import com.phoodora.restapi.interfaces.IAppService;
 import com.phoodora.restapi.models.Restaurant;
 import com.phoodora.restapi.repositories.RestaurantRepository;
 
@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RestaurantService implements IRestaurantService {
+public class AppService implements IAppService {
 
     @Autowired
     private RestaurantRepository repository;
