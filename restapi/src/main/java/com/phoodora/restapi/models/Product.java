@@ -3,11 +3,11 @@ package com.phoodora.restapi.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "products")
-public class Products {
+@Table(name = "product")
+public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column(name = "product_id")
     public int id;
@@ -24,26 +24,31 @@ public class Products {
     @Column(name = "category")
     public String category;
 
-    public Products() {}
+    @Column(name = "image")
+    public String image;
 
-    public Products(int product_id, String name, String category) {
+    @Column(name = "restaurant_id")
+    public int restaurant_id;
 
-        this.id = product_id;
+    public Product() {}
+
+    public Product(String name, String description, double price, String category, String image, int restaurant_id) {
         this.name = name;
+        this.description = description;
+        this.price = price;
         this.category = category;
+        this.image = image;
+        this.restaurant_id = restaurant_id;
     }
 
     @Override
     public String toString() {
-
         StringBuilder builder = new StringBuilder();
-
         builder.append(String.valueOf(id));
         builder.append(", ");
         builder.append(name);
         builder.append(", ");
         builder.append(category);
-
         return builder.toString();
     }
 }
