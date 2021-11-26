@@ -7,12 +7,10 @@ import java.util.Optional;
 import com.phoodora.restapi.interfaces.IAppService;
 
 import com.phoodora.restapi.models.Restaurant;
-import com.phoodora.restapi.models.Users;
 import com.phoodora.restapi.models.Product;
 import com.phoodora.restapi.models.Order;
 
 import com.phoodora.restapi.repositories.RestaurantRepository;
-import com.phoodora.restapi.repositories.UsersRepository;
 import com.phoodora.restapi.repositories.OrderRepository;
 
 import com.phoodora.restapi.repositories.ProductRepository;
