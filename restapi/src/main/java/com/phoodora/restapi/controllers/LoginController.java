@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.phoodora.restapi.models.Users;
-import com.phoodora.restapi.security.UserDetailService;
+import com.phoodora.restapi.security.UserDetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     @Autowired 
-    private UserDetailService userDetailService;
+    private UserDetails userDetailService;
     
     @Autowired
     private PasswordEncoder passwordEncoder; 
@@ -49,7 +49,8 @@ public class LoginController {
     public void addUser(@RequestParam Map<String, String> body) {
        Users user = new Users(); 
        user.setUsername(body.get("username")); 
-       user.setPassword(passwordEncoder.encode(body.get("password"))); 
+       user.setPassword(passwordEncoder.encode(body.get("password")));
+       user.setRole(body.get("role"));
        userDetailService.createUser(user); 
     }
 

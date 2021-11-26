@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -31,14 +32,14 @@ public class Controller {
         }
     
     // RESTAURANT MAPPINGS
-        @GetMapping("/restaurants")
+        @GetMapping("/public/restaurants")
         public List<Restaurant> getAllrestaurant() {
             return service.findAllRestaurants();
         }
 
-        @GetMapping("/restaurants/{id}")
-        public List<Restaurant> getAllUsersRestaurant(@PathVariable int id) {
-            return service.findAllUsersRestaurants(id);
+        @GetMapping("/admin/restaurants/{id}")
+        public ResponseEntity<List<Restaurant>> getAllUsersRestaurant(@PathVariable int id) {
+            return ResponseEntity.ok(service.findAllUsersRestaurants(id));
         }
 
         @GetMapping("/restaurant/{id}")
