@@ -29,16 +29,6 @@ public class Users {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(String.valueOf(id));
-        builder.append(", ");
-        builder.append(username);
-        return builder.toString();
-    }
-
-
     public int getId() {
         return this.id;
     }
@@ -69,5 +59,9 @@ public class Users {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public boolean isEnabled() {
+        return true;
     }
 }

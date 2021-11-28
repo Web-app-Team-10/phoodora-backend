@@ -1,7 +1,7 @@
 package com.phoodora.restapi.security;
 
 import java.io.IOException;
-import java.util.Base64;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,58 +11,46 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.phoodora.restapi.models.Users;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-public class Filter extends UsernamePasswordAuthenticationFilter {
+public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    
+    private AuthenticationManager authenticationManager;
+
+    public AuthenticationFilter(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
     
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-            throws AuthenticationException {
-        
-        String[] cred = getBasicCredentials(request);
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
-        UsernamePasswordAuthenticationToken authToken = 
-                new UsernamePasswordAuthenticationToken(cred[0], cred[1]);
+        try {
+            Users creds = new ObjectMapper().readValue(request.getInputStream(), Users.class);
 
-        return this.getAuthenticationManager().authenticate(authToken);
-    }
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(), creds.getPassword()));
 
-    private String[] getBasicCredentials(HttpServletRequest request) throws AuthenticationException{
-
-        String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-
-        if(header == null || !header.startsWith("Basic")){
-            throw new BadCredentialsException("Login failed");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
-        String cred = header.substring("Basic".length()+1);
-
-        cred = new String(  Base64.getDecoder().decode(cred)  );
-
-        String[] basicCred  = cred.split(":");
-
-        return basicCred;
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         
         String jwtToken = JwtTools.createToken((User)authResult.getPrincipal());
-
         Map<String, String> jsonBody = new HashMap<>();
-        jsonBody.put("access_token", jwtToken);
 
+        jsonBody.put("access_token", jwtToken);
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
         new ObjectMapper().writeValue(response.getOutputStream(), jsonBody);
     }
-
 }

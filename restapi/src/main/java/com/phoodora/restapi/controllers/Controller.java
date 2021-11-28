@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class Controller {
     AppService service;
 
     // ORDER MAPPINGS
-        @GetMapping("/orders/{id}")
+        @GetMapping("/admin/orders/{id}")
         public List<Order> getAllUsersOrders(@PathVariable int id) {
             return service.findAllUsersOrders(id);
         }
@@ -38,16 +37,16 @@ public class Controller {
         }
 
         @GetMapping("/admin/restaurants/{id}")
-        public ResponseEntity<List<Restaurant>> getAllUsersRestaurant(@PathVariable int id) {
-            return ResponseEntity.ok(service.findAllUsersRestaurants(id));
+        public List<Restaurant> getAllUsersRestaurant(@PathVariable int id) {
+            return service.findAllUsersRestaurants(id);
         }
 
-        @GetMapping("/restaurant/{id}")
+        @GetMapping("/public/restaurant/{id}")
         public Restaurant getRestaurant(@PathVariable int id) {
             return service.findByIdRestaurant(id);
         }
 
-        @PostMapping("/restaurant")
+        @PostMapping("/admin/restaurant")
         public String addRestaurant(@RequestBody JSONObject Restaurant) {
             if(Restaurant != null) {
                 service.insertToRestaurant(Restaurant);
@@ -57,7 +56,7 @@ public class Controller {
             }
         }
 
-        @DeleteMapping("restaurant/{id}")
+        @DeleteMapping("/admin/restaurant/{id}")
         public String deleteRestaurant(@PathVariable("id") int id) {
             if(id > 0) {
                 if(service.deleteRestaurant(id)) {
@@ -69,7 +68,7 @@ public class Controller {
             return "The id is invalid for the Restaurant.";
         }
 
-        @PutMapping("/restaurant")
+        @PutMapping("/admin/restaurant")
         public String updateRestaurant(@RequestBody JSONObject Restaurant) {
             if(Restaurant != null) {
                 service.updateRestaurant(Restaurant);
@@ -80,17 +79,17 @@ public class Controller {
         }
 
     // PRODUCT MAPPINGS
-        @GetMapping("/products/{id}")
+        @GetMapping("/public/products/{id}")
         public List<Product> getAllRestaurantProducts(@PathVariable int id) {
             return service.findAllRestaurantProducts(id);
         }
 
-        @GetMapping("/product/{id}")
+        @GetMapping("/admin/product/{id}")
         public Product getProduct(@PathVariable int id) {
             return service.findByIdProduct(id);
         }
 
-        @PostMapping("/product")
+        @PostMapping("/admin/product")
         public String addProduct(@RequestBody JSONObject Product) {
             if(Product != null) {
                 service.insertToProduct(Product);
@@ -100,7 +99,7 @@ public class Controller {
             }
         }
 
-        @DeleteMapping("product/{id}")
+        @DeleteMapping("/admin/product/{id}")
         public String deleteProduct(@PathVariable("id") int id) {
             if(id > 0) {
                 if(service.deleteProduct(id)) {

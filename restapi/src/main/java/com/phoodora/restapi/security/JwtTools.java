@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.User;
 
 
 public class JwtTools {
+
     private static final String SECRET = "secret_key";
 
     public static String createToken(User user){
@@ -28,6 +29,7 @@ public class JwtTools {
     }
 
     public static UsernamePasswordAuthenticationToken validateJwt(String accessToken){
+        
         Algorithm algorithm = Algorithm.HMAC256(SECRET.getBytes());
 
         JWTVerifier verifier = JWT.require(algorithm).build();
@@ -42,11 +44,7 @@ public class JwtTools {
                 SimpleGrantedAuthority auth = new SimpleGrantedAuthority(role);
                 authToken = new UsernamePasswordAuthenticationToken(username, null, List.of(auth) );
 
-        }catch(Exception e){
-        }
-
-
+        } catch(Exception e){}
         return authToken;
     }
-
 }
