@@ -20,7 +20,7 @@ public interface IAppService {
     List<Restaurant> findAllRestaurants();
     List<Restaurant> findAllUsersRestaurants(int id);
     Restaurant findByIdRestaurant(int id);
-    Restaurant insertToRestaurant(JSONObject p);
+    Restaurant insertToRestaurant(JSONObject p, int users_id);
     boolean deleteRestaurant(int id);
     boolean updateRestaurant(JSONObject p);
 

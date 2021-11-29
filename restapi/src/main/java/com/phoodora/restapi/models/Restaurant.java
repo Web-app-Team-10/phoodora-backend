@@ -56,14 +56,68 @@ public class Restaurant {
         this.users_id = users_id;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(String.valueOf(id));
-        builder.append(", ");
-        builder.append(name);
-        builder.append(", ");
-        builder.append(address);
-        return builder.toString();
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getImage() {
+        return this.image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getOperating_hours() {
+        return this.operating_hours;
+    }
+
+    public void setOperating_hours(String operating_hours) {
+        this.operating_hours = operating_hours;
+    }
+
+    public String getPrice_level() {
+        return this.price_level;
+    }
+
+    public void setPrice_level(String price_level) {
+        this.price_level = price_level;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getUsers_id() {
+        return this.users_id;
+    }
+
+    public void setUsers_id(int users_id) {
+        this.users_id = users_id;
     }
 }

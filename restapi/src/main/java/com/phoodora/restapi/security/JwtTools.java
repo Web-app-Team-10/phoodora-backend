@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.User;
 
 public class JwtTools {
 
-    private static final String SECRET = "secret_key";
+    private static final String SECRET = "unicorndances_areCOOLonlyiftheyhaveonlyonehorn_okay";
 
     public static String createToken(User user){
 
