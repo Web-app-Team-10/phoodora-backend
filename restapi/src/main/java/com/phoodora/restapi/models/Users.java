@@ -60,8 +60,4 @@ public class Users {
     public void setRole(String role) {
         this.role = role;
     }
-
-    public boolean isEnabled() {
-        return true;
-    }
 }

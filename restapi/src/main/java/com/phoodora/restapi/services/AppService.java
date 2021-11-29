@@ -12,7 +12,6 @@ import com.phoodora.restapi.models.Order;
 
 import com.phoodora.restapi.repositories.RestaurantRepository;
 import com.phoodora.restapi.repositories.OrderRepository;
-
 import com.phoodora.restapi.repositories.ProductRepository;
 
 import org.json.simple.JSONObject;
@@ -31,6 +30,7 @@ public class AppService implements IAppService {
 
     @Autowired
     private ProductRepository productRepository;
+  
 
 
     // ORDER METHODS
@@ -100,14 +100,13 @@ public class AppService implements IAppService {
     }
 
     @Override
-    public Restaurant insertToRestaurant(JSONObject p) {
+    public Restaurant insertToRestaurant(JSONObject p, int users_id) {
         String name = (String) p.get("name");
         String address = (String) p.get("address"); 
         String image = (String) p.get("image");
         String operating_hours = (String) p.get("operating_hours");
         String price_level = (String) p.get("price_level");
         String type = (String) p.get("type");
-        int users_id = (Integer) p.get("users_id");
 
         Restaurant newRestaurant = new Restaurant(name, address, image, operating_hours, price_level, type, users_id);
         return restaurantRepository.save(newRestaurant);
