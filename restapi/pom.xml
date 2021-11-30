@@ -12,7 +12,7 @@
 	<artifactId>restapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>restapi</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Phoodora app</description>
 	<properties>
 		<java.version>16</java.version>
 	</properties>
@@ -22,12 +22,12 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
