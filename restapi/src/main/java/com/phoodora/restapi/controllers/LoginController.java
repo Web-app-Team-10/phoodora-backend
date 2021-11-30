@@ -18,6 +18,11 @@ public class LoginController {
     @Autowired
     private UserDetails userDetailsService;
 
+    @GetMapping("/logout")
+    public String logoutPage() {
+       return "Logged out";
+   }
+
     @GetMapping("/register") 
     public String register() {  
        return "register";
