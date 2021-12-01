@@ -30,31 +30,27 @@ public class Controller {
     @Autowired
     UsersRepository usersRepository;
 
-    //EMPTY HOME PAGE
-        @RequestMapping("/")
-        String home(){
-            return "Welcome to the home page";
-        }
-
     // ORDER MAPPINGS
         @GetMapping("/admin/orders")
         public List<Order> getAllUsersOrders() {
-            String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-            int users_id = usersRepository.findByUsername(user).getId();
+            // String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+            // int users_id = usersRepository.findByUsername(user).getId();
+            int users_id = 9;
 
             return service.findAllUsersOrders(users_id);
         }
     
     // RESTAURANT MAPPINGS
-        @GetMapping("/public/restaurants")
+        @GetMapping("/")
         public List<Restaurant> getAllrestaurant() {
             return service.findAllRestaurants();
         }
 
         @GetMapping("/manager/restaurants/{id}")
         public List<Restaurant> getAllUsersRestaurant() {
-            String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-            int users_id = usersRepository.findByUsername(user).getId();
+            // String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+            // int users_id = usersRepository.findByUsername(user).getId();
+            int users_id = 9;
 
             return service.findAllUsersRestaurants(users_id);
         }
@@ -66,8 +62,9 @@ public class Controller {
 
         @PostMapping("/manager/restaurant")
         public Restaurant addRestaurant(@RequestBody JSONObject restaurant) {
-            String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-            int users_id = usersRepository.findByUsername(user).getId();
+            //String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+            //int users_id = usersRepository.findByUsername(user).getId();
+            int users_id = 9;
 
             return service.insertToRestaurant(restaurant, users_id);
         }
