@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+// CROSS ORIGIN WILL PROBABLY BE CHANGED TO THE WEBCONFIG WHEN IMPLEMENTED BACK
 @CrossOrigin
 @RestController
 public class Controller {
