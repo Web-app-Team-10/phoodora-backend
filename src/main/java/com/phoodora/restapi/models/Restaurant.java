@@ -20,6 +20,12 @@ public class Restaurant {
     @Column(name = "address")
     public String address;
 
+    @Column(name = "city")
+    public String city;
+
+    @Column(name = "postal_code")
+    public String postal_code;
+
     @Column(name = "image")
     public String image;
 
@@ -84,6 +90,22 @@ public class Restaurant {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCity() {
+        return this.city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPostal_code() {
+        return this.postal_code;
+    }
+
+    public void setPostal_code(String postal_code) {
+        this.postal_code = postal_code;
     }
 
     public String getImage() {
