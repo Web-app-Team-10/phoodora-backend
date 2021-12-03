@@ -19,7 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 @RestController
 public class Controller {
 
