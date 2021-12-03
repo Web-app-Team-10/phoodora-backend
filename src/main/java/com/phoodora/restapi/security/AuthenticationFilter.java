@@ -1,56 +1,56 @@
-// package com.phoodora.restapi.security;
+package com.phoodora.restapi.security;
 
-// import java.io.IOException;
+import java.io.IOException;
 
-// import java.util.HashMap;
-// import java.util.Map;
+import java.util.HashMap;
+import java.util.Map;
 
-// import javax.servlet.FilterChain;
-// import javax.servlet.ServletException;
-// import javax.servlet.http.HttpServletRequest;
-// import javax.servlet.http.HttpServletResponse;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-// import com.fasterxml.jackson.databind.ObjectMapper;
-// import com.phoodora.restapi.models.Users;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.phoodora.restapi.models.Users;
 
-// import org.springframework.http.MediaType;
-// import org.springframework.security.authentication.AuthenticationManager;
-// import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-// import org.springframework.security.core.Authentication;
-// import org.springframework.security.core.AuthenticationException;
-// import org.springframework.security.core.userdetails.User;
-// import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-// public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     
-//     private AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
-//     public AuthenticationFilter(AuthenticationManager authenticationManager) {
-//         this.authenticationManager = authenticationManager;
-//     }
+    public AuthenticationFilter(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
     
-//     @Override
-//     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
-//         try {
-//             Users creds = new ObjectMapper().readValue(request.getInputStream(), Users.class);
+        try {
+            Users creds = new ObjectMapper().readValue(request.getInputStream(), Users.class);
 
-//             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(), creds.getPassword()));
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(creds.getUsername(), creds.getPassword()));
 
-//         } catch (IOException e) {
-//             throw new RuntimeException(e);
-//         }
-//     }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-//     @Override
-//     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         
-//         String jwtToken = JwtTools.createToken((User)authResult.getPrincipal());
-//         Map<String, String> jsonBody = new HashMap<>();
+        String jwtToken = JwtTools.createToken((User)authResult.getPrincipal());
+        Map<String, String> jsonBody = new HashMap<>();
 
-//         jsonBody.put("access_token", jwtToken);
-//         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        jsonBody.put("access_token", jwtToken);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-//         new ObjectMapper().writeValue(response.getOutputStream(), jsonBody);
-//     }
-// }
+        new ObjectMapper().writeValue(response.getOutputStream(), jsonBody);
+    }
+}

@@ -14,7 +14,6 @@ import com.phoodora.restapi.repositories.RestaurantRepository;
 import com.phoodora.restapi.repositories.OrderRepository;
 import com.phoodora.restapi.repositories.ProductRepository;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

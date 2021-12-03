@@ -1,28 +1,25 @@
 package com.phoodora.restapi.controllers;
 
 import com.phoodora.restapi.models.Order;
-import com.phoodora.restapi.models.Product;
 import com.phoodora.restapi.models.Restaurant;
 import com.phoodora.restapi.repositories.UsersRepository;
 import com.phoodora.restapi.services.AppService;
 
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-//import org.springframework.web.bind.annotation.RequestMapping;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
 // CROSS ORIGIN WILL PROBABLY BE CHANGED TO THE WEBCONFIG WHEN IMPLEMENTED BACK
-@CrossOrigin
+
 @RestController
 public class Controller {
 
@@ -35,9 +32,8 @@ public class Controller {
     // ORDER MAPPINGS
         @GetMapping("/admin/orders")
         public List<Order> getAllUsersOrders() {
-            // String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-            // int users_id = usersRepository.findByUsername(user).getId();
-            int users_id = 9;
+            String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+            int users_id = usersRepository.findByUsername(user).getId();
 
             return service.findAllUsersOrders(users_id);
         }
