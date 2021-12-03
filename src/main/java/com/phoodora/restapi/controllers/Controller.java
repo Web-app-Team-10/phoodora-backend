@@ -88,30 +88,30 @@ public class Controller {
             }
         }
 
-    // PRODUCT MAPPINGS
-        @GetMapping("/public/products/{id}")
-        public List<Product> getAllRestaurantProducts(@PathVariable int id) {
-            return service.findAllRestaurantProducts(id);
-        }
+    // // PRODUCT MAPPINGS
+    //     @GetMapping("/public/products/{id}")
+    //     public List<Product> getAllRestaurantProducts(@PathVariable int id) {
+    //         return service.findAllRestaurantProducts(id);
+    //     }
 
-        @GetMapping("/manager/product/{id}")
-        public Product getProduct(@PathVariable int id) {
-            return service.findByIdProduct(id);
-        }
+    //     @GetMapping("/manager/product/{id}")
+    //     public Product getProduct(@PathVariable int id) {
+    //         return service.findByIdProduct(id);
+    //     }
 
-        @PostMapping("/manager/product")
-        public String addProduct(@RequestBody JSONObject Product) {
-            if(Product != null) {
-                service.insertToProduct(Product);
-                return "Added a product";
-            } else {
-                return "Request does not contain a body";
-            }
-        }
+    //     @PostMapping("/manager/product")
+    //     public String addProduct(@RequestBody JSONObject Product) {
+    //         if(Product != null) {
+    //             service.insertToProduct(Product);
+    //             return "Added a product";
+    //         } else {
+    //             return "Request does not contain a body";
+    //         }
+    //     }
 
-        @DeleteMapping("/manager/product/{id}")
-        public String deleteProduct(@PathVariable("id") int id) {
-            service.deleteProduct(id);
-            return "Deleted the Product.";
-        }
+    //     @DeleteMapping("/manager/product/{id}")
+    //     public String deleteProduct(@PathVariable("id") int id) {
+    //         service.deleteProduct(id);
+    //         return "Deleted the Product.";
+    //     }
 }
