@@ -37,10 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.logout().permitAll();
-        // .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-        // .deleteCookies("JSESSIONID")
-        // .invalidateHttpSession(true);
+        http.logout().deleteCookies("JSESSIONID").invalidateHttpSession(true).permitAll();
 
         http.authorizeRequests().antMatchers("/admin/**").authenticated();
 
@@ -57,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() 
     {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://phoodora-frontend.herokuapp.com", "http://localhost:3000/login"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://phoodora-frontend.herokuapp.com"));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
