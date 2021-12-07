@@ -40,7 +40,7 @@ public class Controller {
         }
 
     /* MANAGER RESTAURANT MAPPINGS */
-        @GetMapping("/manager/restaurant")
+        @GetMapping("/admin/restaurant")
         public List<Restaurant> getAllUsersRestaurant() {
             String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
             int users_id = usersRepository.findByUsername(user).getId();
@@ -48,7 +48,7 @@ public class Controller {
             return service.findAllUsersRestaurants(users_id);
         }
 
-        @PostMapping("/manager/restaurant")
+        @PostMapping("/admin/restaurant")
         public Restaurant addRestaurant(@RequestBody JSONObject restaurant) {
             String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
             int users_id = usersRepository.findByUsername(user).getId();
@@ -56,13 +56,13 @@ public class Controller {
             return service.insertToRestaurant(restaurant, users_id);
         }
 
-        @DeleteMapping("/manager/restaurant/{id}")
+        @DeleteMapping("/admin/restaurant/{id}")
         public String deleteRestaurant(@PathVariable int id) {
             service.deleteRestaurant(id);
             return "Deleted the Restaurant.";
         }
 
-        @PutMapping("/manager/restaurant")
+        @PutMapping("/admin/restaurant")
         public String updateRestaurant(@RequestBody JSONObject Restaurant) {
             if(Restaurant != null) {
                 service.updateRestaurant(Restaurant);
@@ -73,7 +73,7 @@ public class Controller {
         }
 
         // ORDER MAPPINGS
-        @GetMapping("/admin/orders")
+        @GetMapping("/orders")
         public List<Order> getAllUsersOrders() {
             String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
             int users_id = usersRepository.findByUsername(user).getId();
