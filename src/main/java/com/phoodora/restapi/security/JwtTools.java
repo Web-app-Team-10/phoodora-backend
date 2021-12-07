@@ -12,7 +12,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 public class JwtTools {
-    
+
     private static final String SECRET = "unicorndances_areCOOLonlyiftheyhaveonlyonehorn_okay";
     
     public static String createToken(User user){
@@ -30,7 +30,7 @@ public class JwtTools {
                     String username = decodedJWT.getSubject();
                     String role = decodedJWT.getClaim("role").asString();
                     SimpleGrantedAuthority auth = new SimpleGrantedAuthority(role);
-                    authToken = new UsernamePasswordAuthenticationToken(username, null, List.of(auth) );
+                    authToken = new UsernamePasswordAuthenticationToken(username, null, List.of(auth));
             } catch(Exception e){}
             return authToken;
     }

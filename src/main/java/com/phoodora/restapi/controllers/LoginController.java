@@ -33,14 +33,14 @@ public class LoginController {
        Users user = new Users();
        user.setUsername((String) input.get("username")); 
        user.setPassword((String) input.get("password"));
-       userDetailsService.createCustomer(user);
+       userDetailsService.createUser(user, "CUSTOMER");
     }
 
     @PostMapping("/register/manager")
     public void addManager(@RequestBody JSONObject input) {
        Users user = new Users();
        user.setUsername((String) input.get("username")); 
-       user.setPassword((String) input.get("username"));
-       userDetailsService.createManager(user);
+       user.setPassword((String) input.get("password"));
+       userDetailsService.createUser(user, "MANAGER");
     }
 }

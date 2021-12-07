@@ -36,26 +36,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     
-    http
-        .authorizeRequests()
-        .antMatchers("/", "/restaurants/**", "/register**", "/login**")
-        .permitAll()
-        .and()
-        .authorizeRequests()
-        .antMatchers("/admin/**")              
-        .authenticated()
-        .and()
-        // .authorizeRequests()
-        // .antMatchers("/manager/**")
-        // .hasRole("ADMIN")
-        // .and()
-        .cors()
-        .and()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-        .csrf()
-        .disable();
+        http.csrf().disable();
+        http.cors()
+            .and()
+            .authorizeRequests()
+            .antMatchers("/").permitAll()
+            .antMatchers("/restaurants/**").permitAll()
+            .antMatchers("/register/**").permitAll()
+            .antMatchers("/login").permitAll()
+            .antMatchers("/orders").hasAnyRole("CUSTOMER","MANAGER")
+            .antMatchers("/manager/**").hasRole("MANAGER")
+            .anyRequest()
+            .authenticated()
+            .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.logout().deleteCookies("JSESSIONID").invalidateHttpSession(true).permitAll();
 
