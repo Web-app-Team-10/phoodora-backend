@@ -18,18 +18,34 @@ public class LoginController {
     private UserDetails userDetailsService;
 
     @PostMapping("/register/customer")
-    public void addCustomer(@RequestBody JSONObject input) {
-       Users user = new Users();
-       user.setUsername((String) input.get("username")); 
-       user.setPassword((String) input.get("password"));
-       userDetailsService.createUser(user, "CUSTOMER");
+    public String addCustomer(@RequestBody JSONObject input) {
+      String username = (String) input.get("username");
+      String password = (String) input.get("password");
+      if(username != "" && password != "") {
+         Users user = new Users();
+         user.setUsername(username); 
+         user.setPassword(password);
+         userDetailsService.createUser(user, "CUSTOMER");
+         return "Created user";
+      }
+      else {
+         return "The request must contain a body";
+      }
     }
 
     @PostMapping("/register/manager")
-    public void addManager(@RequestBody JSONObject input) {
-       Users user = new Users();
-       user.setUsername((String) input.get("username")); 
-       user.setPassword((String) input.get("password"));
-       userDetailsService.createUser(user, "MANAGER");
+    public String addManager(@RequestBody JSONObject input) {
+      String username = (String) input.get("username");
+      String password = (String) input.get("password");
+      if(username != "" && password != "") {
+         Users user = new Users();
+         user.setUsername(username); 
+         user.setPassword(password);
+         userDetailsService.createUser(user, "MANAGER");
+         return "Created user";
+      }
+      else {
+         return "The request must contain a body";
+      }
     }
 }
