@@ -1,14 +1,16 @@
 package com.phoodora.restapi.controllers;
 
 import com.phoodora.restapi.models.Users;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import com.phoodora.restapi.security.UserDetails;
 
-import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+
+import org.json.simple.JSONObject;
 
 @RestController
 public class LoginController {
@@ -16,7 +18,7 @@ public class LoginController {
     @Autowired
     private UserDetails userDetailsService;
 
-    @GetMapping("/login") 
+    @GetMapping("/login")
     public String login() {  
        return "login";
     }

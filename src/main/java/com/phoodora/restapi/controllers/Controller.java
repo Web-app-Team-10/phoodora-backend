@@ -1,22 +1,23 @@
 package com.phoodora.restapi.controllers;
 
+import com.phoodora.restapi.services.AppService;
+import com.phoodora.restapi.repositories.UsersRepository;
+
 import com.phoodora.restapi.models.Order;
 import com.phoodora.restapi.models.Restaurant;
-import com.phoodora.restapi.repositories.UsersRepository;
-import com.phoodora.restapi.services.AppService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
+import org.json.simple.JSONObject;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @RestController
 public class Controller {
@@ -26,41 +27,31 @@ public class Controller {
 
     @Autowired
     UsersRepository usersRepository;
-
-    // ORDER MAPPINGS
-        @GetMapping("/admin/orders")
-        public List<Order> getAllUsersOrders() {
-            String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-            int users_id = usersRepository.findByUsername(user).getId();
-
-            return service.findAllUsersOrders(users_id);
-        }
     
-    // RESTAURANT MAPPINGS
+    /* PUBLIC RESTAURANT MAPPINGS */
         @GetMapping("/")
         public List<Restaurant> getAllrestaurant() {
             return service.findAllRestaurants();
         }
 
-        @GetMapping("/manager/restaurants/{id}")
-        public List<Restaurant> getAllUsersRestaurant() {
-            // String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-            // int users_id = usersRepository.findByUsername(user).getId();
-            int users_id = 9;
-
-            return service.findAllUsersRestaurants(users_id);
-        }
-
-        @GetMapping("/public/restaurant/{id}")
+        @GetMapping("/restaurants/{id}")
         public Restaurant getRestaurant(@PathVariable int id) {
             return service.findByIdRestaurant(id);
         }
 
+    /* MANAGER RESTAURANT MAPPINGS */
+        @GetMapping("/manager/restaurant")
+        public List<Restaurant> getAllUsersRestaurant() {
+            String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+            int users_id = usersRepository.findByUsername(user).getId();
+
+            return service.findAllUsersRestaurants(users_id);
+        }
+
         @PostMapping("/manager/restaurant")
         public Restaurant addRestaurant(@RequestBody JSONObject restaurant) {
-            //String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-            //int users_id = usersRepository.findByUsername(user).getId();
-            int users_id = 9;
+            String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+            int users_id = usersRepository.findByUsername(user).getId();
 
             return service.insertToRestaurant(restaurant, users_id);
         }
@@ -70,7 +61,6 @@ public class Controller {
             service.deleteRestaurant(id);
             return "Deleted the Restaurant.";
         }
-
 
         @PutMapping("/manager/restaurant")
         public String updateRestaurant(@RequestBody JSONObject Restaurant) {
@@ -82,30 +72,12 @@ public class Controller {
             }
         }
 
-    // // PRODUCT MAPPINGS
-    //     @GetMapping("/public/products/{id}")
-    //     public List<Product> getAllRestaurantProducts(@PathVariable int id) {
-    //         return service.findAllRestaurantProducts(id);
-    //     }
+        // ORDER MAPPINGS
+        @GetMapping("/admin/orders")
+        public List<Order> getAllUsersOrders() {
+            String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+            int users_id = usersRepository.findByUsername(user).getId();
 
-    //     @GetMapping("/manager/product/{id}")
-    //     public Product getProduct(@PathVariable int id) {
-    //         return service.findByIdProduct(id);
-    //     }
-
-    //     @PostMapping("/manager/product")
-    //     public String addProduct(@RequestBody JSONObject Product) {
-    //         if(Product != null) {
-    //             service.insertToProduct(Product);
-    //             return "Added a product";
-    //         } else {
-    //             return "Request does not contain a body";
-    //         }
-    //     }
-
-    //     @DeleteMapping("/manager/product/{id}")
-    //     public String deleteProduct(@PathVariable("id") int id) {
-    //         service.deleteProduct(id);
-    //         return "Deleted the Product.";
-    //     }
+            return service.findAllUsersOrders(users_id);
+        }
 }
