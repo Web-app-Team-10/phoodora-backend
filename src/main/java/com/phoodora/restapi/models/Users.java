@@ -62,7 +62,7 @@ public class Users implements UserDetails {
     }
 
     public String getRole() {
-        return this.password;
+        return this.role;
     }
 
     public void setRole(String role) {
