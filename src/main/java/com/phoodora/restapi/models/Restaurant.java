@@ -142,13 +142,13 @@ public class Restaurant {
         this.type = type;
     }
 
-    public JSONObject getMenu() {
-        return this.menu;
-    }
+    // public JSONObject getMenu() {
+    //     return this.menu;
+    // }
 
-    public void setMenu(JSONObject menu) {
-        this.menu = menu;
-    }
+    // public void setMenu(JSONObject menu) {
+    //     this.menu = menu;
+    // }
 
     public int getUsers_id() {
         return this.users_id;
