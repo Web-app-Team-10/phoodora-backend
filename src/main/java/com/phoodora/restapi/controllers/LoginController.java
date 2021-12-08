@@ -8,7 +8,6 @@ import com.phoodora.restapi.security.UserDetails;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.http.MediaType;
 
@@ -19,7 +18,7 @@ public class LoginController {
     private UserDetails userDetailsService;
 
     @PostMapping(path = "/register/customer", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public String addCustomer(@RequestBody Users user) {
+    public String addCustomer(Users user) {
       if(user.getUsername()!= "" && user.getPassword()!= "") {
          userDetailsService.createUser(user, "CUSTOMER");
          return "Created user";
@@ -30,7 +29,7 @@ public class LoginController {
     }
 
     @PostMapping(path = "/register/manager", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public String addManager(@RequestBody Users user) {
+    public String addManager(Users user) {
       if(user.getUsername()!= "" && user.getPassword()!= "") {
          userDetailsService.createUser(user, "MANAGER");
          return "Created user";
