@@ -51,8 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.logout().deleteCookies("JSESSIONID").invalidateHttpSession(true).permitAll();
-
         http.addFilter(new AuthenticationFilter(authenticationManager()));
         http.addFilter(new AuthorizationFilter(authenticationManager()));
     }
