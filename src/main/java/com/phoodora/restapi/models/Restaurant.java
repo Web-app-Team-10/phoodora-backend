@@ -46,9 +46,11 @@ public class Restaurant {
 
     public Restaurant() {}
 
-    public Restaurant(String name, String address, String image, String operating_hours, String price_level, String type, int users_id) {
+    public Restaurant(String name, String address, String city, String postal_code, String image, String operating_hours, String price_level, String type, int users_id) {
         this.name = name;
         this.address = address;
+        this.city = city;
+        this.postal_code = postal_code;
         this.image = image;
         this.operating_hours = operating_hours;
         this.price_level = price_level;

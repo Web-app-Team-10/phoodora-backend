@@ -95,13 +95,15 @@ public class AppService implements IAppService {
     @Override
     public Restaurant insertToRestaurant(JSONObject p, int users_id) {
         String name = (String) p.get("name");
-        String address = (String) p.get("address"); 
+        String address = (String) p.get("address");
+        String city = (String) p.get("city"); 
+        String postal_code = (String) p.get("postal_code"); 
         String image = (String) p.get("image");
         String operating_hours = (String) p.get("operating_hours");
         String price_level = (String) p.get("price_level");
         String type = (String) p.get("type");
 
-        Restaurant newRestaurant = new Restaurant(name, address, image, operating_hours, price_level, type, users_id);
+        Restaurant newRestaurant = new Restaurant(name, address, city, postal_code, image, operating_hours, price_level, type, users_id);
         return restaurantRepository.save(newRestaurant);
     }
 
