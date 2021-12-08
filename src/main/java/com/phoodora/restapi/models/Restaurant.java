@@ -38,8 +38,8 @@ public class Restaurant {
     @Column(name = "type")
     public String type;
 
-    @Column(name = "menu")
-    public JSONObject menu;
+    // @Column(name = "menu")
+    // public JSONObject menu;
 
     @Column(name = "users_id")
     public int users_id;
