@@ -18,24 +18,12 @@ public class LoginController {
     private UserDetails userDetailsService;
 
     @PostMapping(path = "/register/customer", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public String addCustomer(Users user) {
-      if(user.getUsername()!= "" && user.getPassword()!= "") {
+    public void addCustomer(Users user) {
          userDetailsService.createUser(user, "CUSTOMER");
-         return "Created user";
-      }
-      else {
-         return "The request must contain a body";
-      }
     }
 
     @PostMapping(path = "/register/manager", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public String addManager(Users user) {
-      if(user.getUsername()!= "" && user.getPassword()!= "") {
+    public void addManager(Users user) {
          userDetailsService.createUser(user, "MANAGER");
-         return "Created user";
-      }
-      else {
-         return "The request must contain a body";
-      }
     }
 }
