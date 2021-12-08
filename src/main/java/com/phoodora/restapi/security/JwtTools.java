@@ -15,7 +15,7 @@ public class JwtTools {
 
     private static final String SECRET = "unicorndances_areCOOLonlyiftheyhaveonlyonehorn_okay";
     
-    public static String createToken(User user){
+    public static String createToken(User user) {
         Algorithm algorithm = Algorithm.HMAC256(SECRET.getBytes());
         String jwtToken = JWT.create().withSubject(user.getUsername()).withClaim("role", user.getAuthorities().iterator().next().getAuthority()).sign(algorithm);
         return jwtToken;
@@ -31,7 +31,7 @@ public class JwtTools {
                     String role = decodedJWT.getClaim("role").asString();
                     SimpleGrantedAuthority auth = new SimpleGrantedAuthority(role);
                     authToken = new UsernamePasswordAuthenticationToken(username, null, List.of(auth));
-            } catch(Exception e){}
-            return authToken;
+            } catch (Exception e) {}
+        return authToken;
     }
 }

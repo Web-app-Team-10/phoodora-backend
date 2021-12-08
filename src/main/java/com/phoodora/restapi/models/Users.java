@@ -2,9 +2,11 @@ package com.phoodora.restapi.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.*;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -60,7 +62,7 @@ public class Users implements UserDetails {
     }
 
     public String getRole() {
-        return this.password;
+        return this.role;
     }
 
     public void setRole(String role) {
@@ -68,10 +70,10 @@ public class Users implements UserDetails {
     }
 
     @Override
-    public Collection<SimpleGrantedAuthority> getAuthorities() {
-        Collection<SimpleGrantedAuthority> roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority(getRole()));
-        return roles;
+    public Collection<GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+            authorities.add(new SimpleGrantedAuthority(getRole()));
+        return authorities;
     }
 
     @Override

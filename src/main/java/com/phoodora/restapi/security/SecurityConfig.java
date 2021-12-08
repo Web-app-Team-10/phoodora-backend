@@ -1,10 +1,9 @@
 package com.phoodora.restapi.security;
 
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.context.annotation.Bean;
 
 import java.util.Arrays;
 
@@ -35,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    
+        
         http.csrf().disable();
         http.cors()
             .and()
@@ -52,8 +51,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.logout().deleteCookies("JSESSIONID").invalidateHttpSession(true).permitAll();
-
         http.addFilter(new AuthenticationFilter(authenticationManager()));
         http.addFilter(new AuthorizationFilter(authenticationManager()));
     }
@@ -62,8 +59,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() 
     {
         CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://phoodora-frontend.herokuapp.com"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","PUT","OPTIONS","PATCH"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
