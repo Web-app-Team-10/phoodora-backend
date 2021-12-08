@@ -3,11 +3,14 @@ package com.phoodora.restapi.controllers;
 import com.phoodora.restapi.models.Users;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.phoodora.restapi.security.UserDetails;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import org.springframework.http.MediaType;
 
 @RestController
 public class LoginController {
@@ -15,7 +18,7 @@ public class LoginController {
     @Autowired
     private UserDetails userDetailsService;
 
-    @PostMapping("/register/customer")
+    @PostMapping(path = "/register/customer", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     public String addCustomer(@RequestBody Users user) {
       if(user.getUsername()!= "" && user.getPassword()!= "") {
          userDetailsService.createUser(user, "CUSTOMER");
@@ -26,7 +29,7 @@ public class LoginController {
       }
     }
 
-    @PostMapping("/register/manager")
+    @PostMapping(path = "/register/manager", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     public String addManager(@RequestBody Users user) {
       if(user.getUsername()!= "" && user.getPassword()!= "") {
          userDetailsService.createUser(user, "MANAGER");
