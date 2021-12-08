@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import org.json.simple.JSONObject;
-
 @RestController
 public class LoginController {
     
@@ -18,13 +16,8 @@ public class LoginController {
     private UserDetails userDetailsService;
 
     @PostMapping("/register/customer")
-    public String addCustomer(@RequestBody JSONObject input) {
-      String username = (String) input.get("username");
-      String password = (String) input.get("password");
-      if(username != "" && password != "") {
-         Users user = new Users();
-         user.setUsername(username); 
-         user.setPassword(password);
+    public String addCustomer(@RequestBody Users user) {
+      if(user.getUsername()!= "" && user.getPassword()!= "") {
          userDetailsService.createUser(user, "CUSTOMER");
          return "Created user";
       }
@@ -34,13 +27,8 @@ public class LoginController {
     }
 
     @PostMapping("/register/manager")
-    public String addManager(@RequestBody JSONObject input) {
-      String username = (String) input.get("username");
-      String password = (String) input.get("password");
-      if(username != "" && password != "") {
-         Users user = new Users();
-         user.setUsername(username); 
-         user.setPassword(password);
+    public String addManager(@RequestBody Users user) {
+      if(user.getUsername()!= "" && user.getPassword()!= "") {
          userDetailsService.createUser(user, "MANAGER");
          return "Created user";
       }
