@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.simple.JSONObject;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,13 +39,18 @@ public class Controller {
         }
 
         @GetMapping("/restaurants/{id}")
-        public List<Object> getRestaurant(@PathVariable int id) {
-            List<Object> restaurantWithMenu = new ArrayList<>();
+        public Map<String, Object> getRestaurant(@PathVariable int id) {
+            Map<String,Object> map = new HashMap<>();
+
             Restaurant restaurant = service.findByIdRestaurant(id);
             List<Product> product = service.findAllRestaurantProducts(id);
-            restaurantWithMenu.add(restaurant);
-            restaurantWithMenu.add(product);
-            return restaurantWithMenu;
+            map.put("restaurant", restaurant);
+
+            for (int i = 0; i<=product.size(); i++) {
+                    map.put("product" + i, product.get(i));
+            }
+
+            return map;
         }
 
     /* MANAGER RESTAURANT MAPPINGS */
