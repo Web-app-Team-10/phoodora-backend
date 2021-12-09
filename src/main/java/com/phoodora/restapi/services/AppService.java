@@ -118,24 +118,24 @@ public class AppService implements IAppService {
         }
     }
 
-    @Override
-    public boolean updateRestaurant(JSONObject p) {
-        try {
-            int id = (Integer) p.get("restaurant_id");
-            String name = (String) p.get("name");
-            String address = (String) p.get("address"); 
-            String image = (String) p.get("image");
-            String operating_hours = (String) p.get("operating_hours");
-            String price_level = (String) p.get("price_level");
-            String type = (String) p.get("type");
-            int users_id = (Integer) p.get("users_id");
+    // @Override
+    // public boolean updateRestaurant(JSONObject p) {
+    //     try {
+    //         int id = (Integer) p.get("restaurant_id");
+    //         String name = (String) p.get("name");
+    //         String address = (String) p.get("address"); 
+    //         String image = (String) p.get("image");
+    //         String operating_hours = (String) p.get("operating_hours");
+    //         String price_level = (String) p.get("price_level");
+    //         String type = (String) p.get("type");
+    //         int users_id = (Integer) p.get("users_id");
     
-            Restaurant newRestaurant = new Restaurant(id, name, address, image, operating_hours, price_level, type, users_id);
-            restaurantRepository.save(newRestaurant);
-            return true;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
-    }
+    //         Restaurant newRestaurant = new Restaurant(id, name, address, image, operating_hours, price_level, type, users_id);
+    //         restaurantRepository.save(newRestaurant);
+    //         return true;
+    //     } catch (Exception e) {
+    //         System.out.println(e.getMessage());
+    //         return false;
+    //     }
+    // }
 }    

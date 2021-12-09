@@ -62,15 +62,15 @@ public class Controller {
             return "Deleted the Restaurant.";
         }
 
-        @PutMapping("/admin/restaurant")
-        public String updateRestaurant(@RequestBody JSONObject Restaurant) {
-            if(Restaurant != null) {
-                service.updateRestaurant(Restaurant);
-                return "Updated Restaurant.";
-            } else {
-                return "Request does not contain a body";
-            }
-        }
+        // @PutMapping("/admin/restaurant")
+        // public String updateRestaurant(@RequestBody JSONObject Restaurant) {
+        //     if(Restaurant != null) {
+        //         service.updateRestaurant(Restaurant);
+        //         return "Updated Restaurant.";
+        //     } else {
+        //         return "Request does not contain a body";
+        //     }
+        //}
 
         // ORDER MAPPINGS
         @GetMapping("/orders")

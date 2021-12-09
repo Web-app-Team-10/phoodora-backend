@@ -21,5 +21,5 @@ public interface IAppService {
     Restaurant findByIdRestaurant(int id);
     Restaurant insertToRestaurant(JSONObject p, int users_id);
     boolean deleteRestaurant(int id);
-    boolean updateRestaurant(JSONObject p);
+    // boolean updateRestaurant(JSONObject p);
 }
