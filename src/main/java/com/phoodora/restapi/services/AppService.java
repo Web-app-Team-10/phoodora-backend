@@ -138,10 +138,10 @@ public class AppService implements IAppService {
     public Product insertToProduct(JSONObject p) {
         String category = (String) p.get("category");
         String name = (String) p.get("name");
-        double price = (double) p.get("price"); 
+        double price = Double.valueOf((String) p.get("price"));
         String description = (String) p.get("description"); 
         String image = (String) p.get("image");
-        int restaurant_id = (int) p.get("restaurant_id");
+        int restaurant_id = Integer.valueOf((String) p.get("restaurant_id"));
 
         Product newProduct = new Product(category, name, price, description, image, restaurant_id);
         return productRepository.save(newProduct);
