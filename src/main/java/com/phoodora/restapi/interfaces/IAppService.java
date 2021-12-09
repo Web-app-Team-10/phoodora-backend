@@ -3,6 +3,7 @@ package com.phoodora.restapi.interfaces;
 import java.util.List;
 
 import com.phoodora.restapi.models.Order;
+import com.phoodora.restapi.models.Product;
 import com.phoodora.restapi.models.Restaurant;
 
 import org.json.simple.JSONObject;
@@ -21,5 +22,9 @@ public interface IAppService {
     Restaurant findByIdRestaurant(int id);
     Restaurant insertToRestaurant(JSONObject p, int users_id);
     boolean deleteRestaurant(int id);
-    // boolean updateRestaurant(JSONObject p);
+    
+    // Required product methods
+    List<Product> findAllRestaurantProducts(int id);
+    Product insertToProduct(JSONObject p);
+    boolean deleteProduct(int id);
 }
