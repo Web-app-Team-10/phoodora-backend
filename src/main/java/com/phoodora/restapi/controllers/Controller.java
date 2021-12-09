@@ -45,10 +45,7 @@ public class Controller {
             Restaurant restaurant = service.findByIdRestaurant(id);
             List<Product> product = service.findAllRestaurantProducts(id);
             map.put("restaurant", restaurant);
-
-            for (int i = 0; i<=product.size(); i++) {
-                    map.put("product" + i, product.get(i));
-            }
+            map.put("menu", product);
 
             return map;
         }

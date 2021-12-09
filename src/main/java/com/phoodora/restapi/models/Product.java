@@ -29,7 +29,9 @@ public class Product {
 
     @Column(name = "restaurant_id")
     public int restaurant_id;
-    
+
+    public Product() {}
+        
     public Product (String category, String name, double price, String description, String image, int restaurant_id) {
         this.category = category;
         this.name = name;
