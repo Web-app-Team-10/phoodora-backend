@@ -93,7 +93,7 @@ public class Controller {
             return service.findAllUsersOrders(users_id);
         }
 
-        @GetMapping("customer/order")
+        @GetMapping("/customer/order")
         public Order getCurrentUsersOrder() {
             String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
             int users_id = usersRepository.findByUsername(user).getId();
@@ -101,19 +101,19 @@ public class Controller {
             return service.findUsersCurrentOrder(users_id);
         }
 
-        @PostMapping("customer/order")
+        @PostMapping("/customer/order")
         public void addOrder(@RequestBody JSONObject order) {
             String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
             int users_id = usersRepository.findByUsername(user).getId();
             service.insertToOrder(order, users_id);
         }
 
-        @GetMapping("admin/restaurant/orders")
+        @GetMapping("/admin/restaurant/orders/{id}")
         public List<Order> getAllRestaurantOrders(@PathVariable int id) {
             return service.findAllRestaurantOrders(id);
         }
 
-        @GetMapping("admin/restaurant/order")
+        @GetMapping("/admin/restaurant/order/{id}")
         public Order getCurrentRestaurantOrder(@PathVariable int id) {
             return service.findRestaurantCurrentOrder(id);
         }
