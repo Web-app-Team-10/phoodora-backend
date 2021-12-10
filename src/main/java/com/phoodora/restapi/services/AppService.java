@@ -11,9 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.phoodora.restapi.models.Restaurant;
 import com.phoodora.restapi.models.Order;
-
+import com.phoodora.restapi.models.Product;
 import com.phoodora.restapi.repositories.RestaurantRepository;
 import com.phoodora.restapi.repositories.OrderRepository;
+import com.phoodora.restapi.repositories.ProductRepository;
 
 import org.json.simple.JSONObject;
 
@@ -26,6 +27,9 @@ public class AppService implements IAppService {
 
     @Autowired
     private RestaurantRepository restaurantRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
   
     // ORDER METHODS
     @Override
@@ -118,24 +122,39 @@ public class AppService implements IAppService {
         }
     }
 
+    // PRODUCT METHODS
     @Override
-    public boolean updateRestaurant(JSONObject p) {
+    public List<Product> findAllRestaurantProducts(int id) {
+        List<Product> restaurantProducts = new ArrayList<>();
+        for (Product a : productRepository.findAll()) {
+            if(a.restaurant_id == id) {
+                restaurantProducts.add(a);
+            }
+        }
+        return restaurantProducts;
+    }
+
+    @Override
+    public Product insertToProduct(JSONObject p) {
+        String category = (String) p.get("category");
+        String name = (String) p.get("name");
+        double price = Double.valueOf((String) p.get("price"));
+        String description = (String) p.get("description"); 
+        String image = (String) p.get("image");
+        int restaurant_id = Integer.valueOf((String) p.get("restaurant_id"));
+
+        Product newProduct = new Product(category, name, price, description, image, restaurant_id);
+        return productRepository.save(newProduct);
+    }
+
+    @Override
+    public boolean deleteProduct(int id) {
         try {
-            int id = (Integer) p.get("restaurant_id");
-            String name = (String) p.get("name");
-            String address = (String) p.get("address"); 
-            String image = (String) p.get("image");
-            String operating_hours = (String) p.get("operating_hours");
-            String price_level = (String) p.get("price_level");
-            String type = (String) p.get("type");
-            int users_id = (Integer) p.get("users_id");
-    
-            Restaurant newRestaurant = new Restaurant(id, name, address, image, operating_hours, price_level, type, users_id);
-            restaurantRepository.save(newRestaurant);
+            productRepository.deleteById(id);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
         }
-    }
+    }    
 }    

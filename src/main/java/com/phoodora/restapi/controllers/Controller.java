@@ -4,18 +4,21 @@ import com.phoodora.restapi.services.AppService;
 import com.phoodora.restapi.repositories.UsersRepository;
 
 import com.phoodora.restapi.models.Order;
+import com.phoodora.restapi.models.Product;
 import com.phoodora.restapi.models.Restaurant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.json.simple.JSONObject;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -35,8 +38,15 @@ public class Controller {
         }
 
         @GetMapping("/restaurants/{id}")
-        public Restaurant getRestaurant(@PathVariable int id) {
-            return service.findByIdRestaurant(id);
+        public Map<String, Object> getRestaurant(@PathVariable int id) {
+            Map<String,Object> map = new HashMap<>();
+
+            Restaurant restaurant = service.findByIdRestaurant(id);
+            List<Product> product = service.findAllRestaurantProducts(id);
+            map.put("restaurant", restaurant);
+            map.put("menu", product);
+
+            return map;
         }
 
     /* MANAGER RESTAURANT MAPPINGS */
@@ -62,14 +72,16 @@ public class Controller {
             return "Deleted the Restaurant.";
         }
 
-        @PutMapping("/admin/restaurant")
-        public String updateRestaurant(@RequestBody JSONObject Restaurant) {
-            if(Restaurant != null) {
-                service.updateRestaurant(Restaurant);
-                return "Updated Restaurant.";
-            } else {
-                return "Request does not contain a body";
-            }
+        // PRODUCT MAPPINGS
+        @PostMapping("/admin/product")
+        public Product addProduct(@RequestBody JSONObject product) {
+            return service.insertToProduct(product);
+        }
+
+        @DeleteMapping("/admin/product/{id}")
+        public String deleteProduct(@PathVariable int id) {
+            service.deleteProduct(id);
+            return "Deleted the Product.";
         }
 
         // ORDER MAPPINGS

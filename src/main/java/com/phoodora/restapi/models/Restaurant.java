@@ -2,8 +2,6 @@ package com.phoodora.restapi.models;
 
 import javax.persistence.*;
 
-import org.json.simple.JSONObject;
-
 @Entity
 @Table(name = "restaurant")
 public class Restaurant {
@@ -38,9 +36,6 @@ public class Restaurant {
     @Column(name = "type")
     public String type;
 
-    // @Column(name = "menu")
-    // public JSONObject menu;
-
     @Column(name = "users_id")
     public int users_id;
 
@@ -51,17 +46,6 @@ public class Restaurant {
         this.address = address;
         this.city = city;
         this.postal_code = postal_code;
-        this.image = image;
-        this.operating_hours = operating_hours;
-        this.price_level = price_level;
-        this.type = type;
-        this.users_id = users_id;
-    }
-
-    public Restaurant(int id, String name, String address, String image, String operating_hours, String price_level, String type, int users_id) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
         this.image = image;
         this.operating_hours = operating_hours;
         this.price_level = price_level;
@@ -141,14 +125,6 @@ public class Restaurant {
     public void setType(String type) {
         this.type = type;
     }
-
-    // public JSONObject getMenu() {
-    //     return this.menu;
-    // }
-
-    // public void setMenu(JSONObject menu) {
-    //     this.menu = menu;
-    // }
 
     public int getUsers_id() {
         return this.users_id;
