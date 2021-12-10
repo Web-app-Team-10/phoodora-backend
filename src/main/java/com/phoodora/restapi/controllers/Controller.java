@@ -85,11 +85,36 @@ public class Controller {
         }
 
         // ORDER MAPPINGS
-        @GetMapping("/orders")
+        @GetMapping("/customer/orders")
         public List<Order> getAllUsersOrders() {
             String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
             int users_id = usersRepository.findByUsername(user).getId();
 
             return service.findAllUsersOrders(users_id);
+        }
+
+        @GetMapping("customer/order")
+        public Order getCurrentUsersOrder() {
+            String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+            int users_id = usersRepository.findByUsername(user).getId();
+
+            return service.findUsersCurrentOrder(users_id);
+        }
+
+        @PostMapping("customer/order")
+        public void addOrder(@RequestBody JSONObject order) {
+            String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+            int users_id = usersRepository.findByUsername(user).getId();
+            service.insertToOrder(order, users_id);
+        }
+
+        @GetMapping("admin/restaurant/orders")
+        public List<Order> getAllRestaurantOrders(@PathVariable int id) {
+            return service.findAllRestaurantOrders(id);
+        }
+
+        @GetMapping("admin/restaurant/order")
+        public Order getCurrentRestaurantOrder(@PathVariable int id) {
+            return service.findRestaurantCurrentOrder(id);
         }
 }

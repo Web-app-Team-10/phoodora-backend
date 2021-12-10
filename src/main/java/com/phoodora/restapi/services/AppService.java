@@ -4,10 +4,13 @@ import org.springframework.stereotype.Service;
 import com.phoodora.restapi.interfaces.IAppService;
 
 import java.util.List;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.phoodora.restapi.models.Restaurant;
 import com.phoodora.restapi.models.Order;
@@ -44,18 +47,55 @@ public class AppService implements IAppService {
     }
 
     @Override
-    public Order findByIdOrder(int id) {
-        Optional<Order> result = orderRepository.findById(id);
-        if (result.isPresent()) {
-            return result.get();
-        } else {
-            return null;
+    public List<Order> findAllRestaurantOrders(int id) {
+        List<Order> restaurantOrders = new ArrayList<>();
+        for (Order a : orderRepository.findAll()) {
+            if(a.restaurant_id == id) {
+                restaurantOrders.add(a);
+            }
         }
+        return restaurantOrders;
     }
 
     @Override
-    public Order insertToOrder(Order p) {
-        return orderRepository.save(p);
+    public Order findUsersCurrentOrder(int id) {
+        Order result = new Order();
+        for (Order a : findAllUsersOrders(id)) {
+            boolean deliveryStatus = a.getDelivered();
+            if(deliveryStatus == false) {
+                result = a;
+                break;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Order findRestaurantCurrentOrder(int id) {
+        Order result = new Order();
+        for (Order a : findAllRestaurantOrders(id)) {
+            boolean deliveryStatus = a.getDelivered();
+            if(deliveryStatus == false) {
+                result = a;
+                break;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public void insertToOrder(JSONObject p, int users_id) {
+
+                LocalDateTime dateTime = java.time.LocalDateTime.now();
+                String time = dateTime.toString();
+
+                int restaurant_id = restaurantRepository.findByName((String) p.get("restaurant_name")).getId();
+        
+                Order newOrder = new Order(p, time, users_id, restaurant_id);
+                orderRepository.save(newOrder);
+
+        // JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        // jdbcTemplate.update("insert into public.order(order_data) VALUES (to_json(?)) WHERE time = ?", p, time);
     }
 
     @Override
@@ -156,5 +196,5 @@ public class AppService implements IAppService {
             System.out.println(e.getMessage());
             return false;
         }
-    }    
+    }   
 }    

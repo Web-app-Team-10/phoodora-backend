@@ -12,8 +12,10 @@ public interface IAppService {
 
     // Required order methods
     List<Order> findAllUsersOrders(int id);
-    Order findByIdOrder(int id);
-    Order insertToOrder(Order p);
+    List<Order> findAllRestaurantOrders(int id);
+    Order findUsersCurrentOrder(int id);
+    Order findRestaurantCurrentOrder(int id);
+    void insertToOrder(JSONObject p, int users_id);
     boolean updateOrder(Order p);
 
     // Required restaurant methods
