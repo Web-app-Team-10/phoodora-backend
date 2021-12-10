@@ -4,13 +4,11 @@ import org.springframework.stereotype.Service;
 import com.phoodora.restapi.interfaces.IAppService;
 
 import java.util.List;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.phoodora.restapi.models.Restaurant;
 import com.phoodora.restapi.models.Order;
@@ -35,6 +33,16 @@ public class AppService implements IAppService {
     private ProductRepository productRepository;
   
     // ORDER METHODS
+    @Override
+    public Order findOrderById(int id) {
+        Optional<Order> result = orderRepository.findById(id);
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public List<Order> findAllUsersOrders(int id) {
         List<Order> usersOrders = new ArrayList<>();
@@ -71,13 +79,12 @@ public class AppService implements IAppService {
     }
 
     @Override
-    public Order findRestaurantCurrentOrder(int id) {
-        Order result = new Order();
+    public List<Order> findRestaurantCurrentOrder(int id) {
+        List<Order> result = new ArrayList<>();
         for (Order a : findAllRestaurantOrders(id)) {
             boolean deliveryStatus = a.getDelivered();
             if(deliveryStatus == false) {
-                result = a;
-                break;
+                result.add(a);
             }
         }
         return result;
@@ -85,7 +92,6 @@ public class AppService implements IAppService {
 
     @Override
     public void insertToOrder(JSONObject p, int users_id) {
-
                 LocalDateTime dateTime = java.time.LocalDateTime.now();
                 String time = dateTime.toString();
 
@@ -93,20 +99,30 @@ public class AppService implements IAppService {
         
                 Order newOrder = new Order(p, time, users_id, restaurant_id);
                 orderRepository.save(newOrder);
-
-        // JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        // jdbcTemplate.update("insert into public.order(order_data) VALUES (to_json(?)) WHERE time = ?", p, time);
     }
 
     @Override
-    public boolean updateOrder(Order p) {
-        try {
-            orderRepository.save(p);
-            return true;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
+    public void updateOrder(JSONObject updateStatus) {
+
+        int order_id = Integer.valueOf((String) updateStatus.get("order_id"));
+        Order orderToBeChanged = findOrderById(order_id);
+
+            String stateToBeModified = (String) updateStatus.get("state");
+            if (stateToBeModified == "received") {
+                orderToBeChanged.setReceived(true);
+            }
+            else if (stateToBeModified == "preparing") {
+                orderToBeChanged.setPreparing(true);
+            }
+            else if (stateToBeModified == "waiting") {
+                orderToBeChanged.setWaiting(true);
+            }
+            else if (stateToBeModified == "delivering") {
+                orderToBeChanged.setDelivering(true);
+            }
+            else if (stateToBeModified == "delivered") {
+                orderToBeChanged.setDelivered(true);
+            }
     }
 
     // RESTAURANT METHODS

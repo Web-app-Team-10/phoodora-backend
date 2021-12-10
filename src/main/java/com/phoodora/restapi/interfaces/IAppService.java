@@ -11,12 +11,13 @@ import org.json.simple.JSONObject;
 public interface IAppService {
 
     // Required order methods
+    Order findOrderById(int id);
     List<Order> findAllUsersOrders(int id);
     List<Order> findAllRestaurantOrders(int id);
     Order findUsersCurrentOrder(int id);
-    Order findRestaurantCurrentOrder(int id);
+    List<Order> findRestaurantCurrentOrder(int id);
     void insertToOrder(JSONObject p, int users_id);
-    boolean updateOrder(Order p);
+    void updateOrder(JSONObject updateStatus);
 
     // Required restaurant methods
     List<Restaurant> findAllRestaurants();

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -108,13 +109,23 @@ public class Controller {
             service.insertToOrder(order, users_id);
         }
 
+        @PutMapping("/customer/order")
+        public void finalizeOrderStatus(@RequestBody JSONObject updateStatus) {
+            service.updateOrder(updateStatus);
+        }
+
         @GetMapping("/admin/restaurant/orders/{id}")
         public List<Order> getAllRestaurantOrders(@PathVariable int id) {
             return service.findAllRestaurantOrders(id);
         }
 
         @GetMapping("/admin/restaurant/order/{id}")
-        public Order getCurrentRestaurantOrder(@PathVariable int id) {
+        public List<Order> getCurrentRestaurantOrder(@PathVariable int id) {
             return service.findRestaurantCurrentOrder(id);
+        }
+
+        @PutMapping("/admin/restaurant/order")
+        public void updateOrderStatus(@RequestBody JSONObject updateStatus) {
+            service.updateOrder(updateStatus);
         }
 }

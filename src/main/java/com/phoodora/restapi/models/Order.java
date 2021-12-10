@@ -67,6 +67,7 @@ public class Order {
         this.delivered = false;
     }
 
+
     public int getId() {
         return this.id;
     }
@@ -75,13 +76,13 @@ public class Order {
         this.id = id;
     }
 
-    // public JSONObject getOrder_data() {
-    //     return this.order_data;
-    // }
+    public JSONObject getOrder_data() {
+        return this.order_data;
+    }
 
-    // public void setOrder_data(JSONObject order_data) {
-    //     this.order_data = order_data;
-    // }
+    public void setOrder_data(JSONObject order_data) {
+        this.order_data = order_data;
+    }
 
     public String getTime() {
         return this.time;
@@ -174,4 +175,5 @@ public class Order {
     public void setRestaurant_id(int restaurant_id) {
         this.restaurant_id = restaurant_id;
     }
+
 }
