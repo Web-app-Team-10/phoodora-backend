@@ -1,11 +1,20 @@
 package com.phoodora.restapi.models;
 
-import java.security.Timestamp;
 import javax.persistence.*;
-import org.json.simple.JSONArray;
 
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import org.json.simple.JSONObject;
+
+import java.sql.Timestamp;
+
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 @Entity
-@Table(name = "order")
+@Table(name = "order", schema = "public")
+@DynamicUpdate
 public class Order {
 
     @Id
@@ -14,11 +23,12 @@ public class Order {
     @Column(name = "order_id")
     public int id;
 
-    @Column(name = "order_data")
-    public JSONArray order_data;
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
+    public JSONObject order_data;
 
-    @Column(name = "eta")
-    public Timestamp eta;
+    @Column(name = "time")
+    private String time;
 
     @Column(name = "received")
     public boolean received;
@@ -35,6 +45,9 @@ public class Order {
     @Column(name = "delivered")
     public boolean delivered;
 
+    @Column(name = "eta")
+    public Timestamp eta;
+
     @Column(name = "users_id")
     public int users_id;
 
@@ -42,6 +55,20 @@ public class Order {
     public int restaurant_id;
 
     public Order() {}
+
+    public Order(JSONObject order_data, String time, int users_id, int restaurant_id) {
+        this.order_data = order_data;
+        this.time = time;
+        this.users_id = users_id;
+        this.restaurant_id = restaurant_id;
+
+        this.received = false;
+        this.preparing = false;
+        this.waiting = false;
+        this.delivering = false;
+        this.delivered = false;
+    }
+
 
     public int getId() {
         return this.id;
@@ -51,20 +78,20 @@ public class Order {
         this.id = id;
     }
 
-    public JSONArray getOrder_data() {
+    public JSONObject getOrder_data() {
         return this.order_data;
     }
 
-    public void setOrder_data(JSONArray order_data) {
+    public void setOrder_data(JSONObject order_data) {
         this.order_data = order_data;
     }
 
-    public Timestamp getEta() {
-        return this.eta;
+    public String getTime() {
+        return this.time;
     }
 
-    public void setEta(Timestamp eta) {
-        this.eta = eta;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public boolean isReceived() {
@@ -127,6 +154,14 @@ public class Order {
         this.delivered = delivered;
     }
 
+    public Timestamp getEta() {
+        return this.eta;
+    }
+
+    public void setEta(Timestamp eta) {
+        this.eta = eta;
+    }
+
     public int getUsers_id() {
         return this.users_id;
     }
@@ -142,4 +177,5 @@ public class Order {
     public void setRestaurant_id(int restaurant_id) {
         this.restaurant_id = restaurant_id;
     }
+
 }

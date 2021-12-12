@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import com.phoodora.restapi.interfaces.IAppService;
 
 import java.util.List;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -33,6 +34,16 @@ public class AppService implements IAppService {
   
     // ORDER METHODS
     @Override
+    public Order findOrderById(int id) {
+        Optional<Order> result = orderRepository.findById(id);
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
     public List<Order> findAllUsersOrders(int id) {
         List<Order> usersOrders = new ArrayList<>();
         for (Order a : orderRepository.findAll()) {
@@ -44,29 +55,85 @@ public class AppService implements IAppService {
     }
 
     @Override
-    public Order findByIdOrder(int id) {
-        Optional<Order> result = orderRepository.findById(id);
-        if (result.isPresent()) {
-            return result.get();
-        } else {
-            return null;
+    public List<Order> findAllRestaurantOrders(int id) {
+        List<Order> restaurantOrders = new ArrayList<>();
+        for (Order a : orderRepository.findAll()) {
+            if(a.restaurant_id == id) {
+                restaurantOrders.add(a);
+            }
         }
+        return restaurantOrders;
     }
 
     @Override
-    public Order insertToOrder(Order p) {
-        return orderRepository.save(p);
+    public Order findUsersCurrentOrder(int id) {
+        Order result = new Order();
+        for (Order a : findAllUsersOrders(id)) {
+            boolean deliveryStatus = a.getDelivered();
+            if(deliveryStatus == false) {
+                result = a;
+                break;
+            }
+        }
+        return result;
     }
 
     @Override
-    public boolean updateOrder(Order p) {
-        try {
-            orderRepository.save(p);
-            return true;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return false;
+    public List<Order> findRestaurantCurrentOrder(int id) {
+        List<Order> result = new ArrayList<>();
+        for (Order a : findAllRestaurantOrders(id)) {
+            boolean deliveryStatus = a.getDelivered();
+            if(deliveryStatus == false) {
+                result.add(a);
+            }
         }
+        return result;
+    }
+
+    @Override
+    public void insertToOrder(JSONObject p, int users_id) {
+                LocalDateTime dateTime = java.time.LocalDateTime.now();
+                String time = dateTime.toString();
+
+                int restaurant_id = restaurantRepository.findByName((String) p.get("restaurant_name")).getId();
+        
+                Order newOrder = new Order(p, time, users_id, restaurant_id);
+                orderRepository.save(newOrder);
+    }
+
+    @Override
+    public void updateOrder(JSONObject updateStatus) {
+
+        String stateToBeModified = (String) updateStatus.get("state");
+        int order_id = (Integer) updateStatus.get("order_id");
+        Order order = findOrderById(order_id);
+
+            switch(stateToBeModified) {
+                case "received":
+                    order.setReceived(true);
+                    orderRepository.save(order);
+                    break;
+
+                case "preparing":
+                order.setPreparing(true);
+                orderRepository.save(order);
+                    break;
+
+                case "waiting":
+                order.setWaiting(true);
+                orderRepository.save(order);
+                    break; 
+
+                case "delivering":
+                order.setDelivering(true);
+                orderRepository.save(order);
+                    break;
+
+                case "delivered":
+                order.setDelivered(true);
+                orderRepository.save(order);
+                    break;
+                }
     }
 
     // RESTAURANT METHODS
@@ -156,5 +223,5 @@ public class AppService implements IAppService {
             System.out.println(e.getMessage());
             return false;
         }
-    }    
+    }   
 }    
