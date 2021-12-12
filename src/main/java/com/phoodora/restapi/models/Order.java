@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.json.simple.JSONObject;
@@ -13,6 +14,7 @@ import java.sql.Timestamp;
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 @Entity
 @Table(name = "order", schema = "public")
+@DynamicUpdate
 public class Order {
 
     @Id

@@ -104,25 +104,36 @@ public class AppService implements IAppService {
     @Override
     public void updateOrder(JSONObject updateStatus) {
 
-        int order_id = Integer.valueOf((String) updateStatus.get("order_id"));
-        Order orderToBeChanged = findOrderById(order_id);
+        String stateToBeModified = (String) updateStatus.get("state");
+        int order_id = (Integer) updateStatus.get("order_id");
+        Order order = findOrderById(order_id);
 
-            String stateToBeModified = (String) updateStatus.get("state");
-            if (stateToBeModified == "received") {
-                orderToBeChanged.setReceived(true);
-            }
-            else if (stateToBeModified == "preparing") {
-                orderToBeChanged.setPreparing(true);
-            }
-            else if (stateToBeModified == "waiting") {
-                orderToBeChanged.setWaiting(true);
-            }
-            else if (stateToBeModified == "delivering") {
-                orderToBeChanged.setDelivering(true);
-            }
-            else if (stateToBeModified == "delivered") {
-                orderToBeChanged.setDelivered(true);
-            }
+            switch(stateToBeModified) {
+                case "received":
+                    order.setReceived(true);
+                    orderRepository.save(order);
+                    break;
+
+                case "preparing":
+                order.setPreparing(true);
+                orderRepository.save(order);
+                    break;
+
+                case "waiting":
+                order.setWaiting(true);
+                orderRepository.save(order);
+                    break; 
+
+                case "delivering":
+                order.setDelivering(true);
+                orderRepository.save(order);
+                    break;
+
+                case "delivered":
+                order.setDelivered(true);
+                orderRepository.save(order);
+                    break;
+                }
     }
 
     // RESTAURANT METHODS
